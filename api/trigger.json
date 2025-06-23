@@ -1,0 +1,13 @@
+{
+    "type": "checkout.session.completed",
+    "data": {
+      "object": {
+        "id": "cs_test_123456789",
+        "object": "checkout.session",
+        "metadata": {
+          "supabase_user_id": "test-user-123"
+        }
+      }
+    }
+  }
+  
