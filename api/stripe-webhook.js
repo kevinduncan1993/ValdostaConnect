@@ -1,13 +1,14 @@
-require('dotenv').config(); // Load .env
+require('dotenv').config(); // Load environment variables
 
 const express = require('express');
 const Stripe = require('stripe');
-// ❌ Remove node-fetch — it's unnecessary in Node 18+
+
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
+
 const app = express();
 
-// Stripe requires the raw body to validate webhook signature
+// Stripe requires raw body for webhook verification
 app.use('/stripe-webhook', express.raw({ type: 'application/json' }));
 
 app.post('/stripe-webhook', async (req, res) => {
@@ -59,6 +60,7 @@ app.post('/stripe-webhook', async (req, res) => {
   res.status(200).send('Webhook received');
 });
 
-app.listen(3000, () => {
-  console.log('✅ Webhook server running on port 3000');
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`✅ Webhook server running on port ${PORT}`);
 });
